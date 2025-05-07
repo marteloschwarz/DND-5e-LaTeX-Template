@@ -153,6 +153,9 @@
     armor-class .initial:n         = 10,
     armor-class .value_required:n  = true,
     armorclass .meta:n = { armor-class = {#1} },
+    initiative .tl_set:N         = \l__initiative_tl,
+    initiative .initial:n        = +0~(10),
+    initiative .value_required:n = true,
     hit-points .tl_set:N         = \l__hit_points_tl,
     hit-points .initial:n        = \DndDice {1d8},
     hit-points .value_required:n = true,
@@ -165,7 +168,7 @@
 \cs_new_protected_nopar:Npn \__dnd_monster_basics:
   {
       \begin {__dnd_monster_attributes}
-        \item [\armorclassname] \l__armor_class_tl
+        \item [\armorclassname] \l__armor_class_tl \hspace{4em} \textit{\initiativename}~ \l__initiative_tl
         \item [\hitpointsname]  \l__hit_points_tl
         \item [\speedname]      \l__speed_tl
       \end {__dnd_monster_attributes}

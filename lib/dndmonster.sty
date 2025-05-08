@@ -1,5 +1,12 @@
 \ExplSyntaxOn
 
+\usepackage[table]{xcolor} % Make sure this is in your preamble
+
+\definecolor{dndcelltop}{RGB}{200,200,200}      % Light gray, tweak as needed
+\definecolor{dndcelltopalt}{RGB}{215,215,215}   % Slightly darker
+\definecolor{dndcellbot}{RGB}{235,235,235}      % Another light gray
+\definecolor{dndcellbotal}{RGB}{220,220,220}    % Another shade
+
 \NewDocumentCommand {\DndCRExp} { m }
   {
     \str_case_e:nnF {#1}
@@ -181,7 +188,6 @@
     \group_begin:
       \keys_set:nn { dnd / monster / basics } {#1}
       \__dnd_monster_basics:
-      \DndMonsterLine
     \group_end:
   }
 
@@ -293,9 +299,6 @@
 %% Monster details
 \keys_define:nn { dnd / monster / details }
 {
-  saving-throws .tl_set:N         = \l__saving_throws_tl,
-  saving-throws .value_required:n = true,
-  savingthrows .meta:n = { saving-throws = {#1} },
   skills .tl_set:N         = \l__skills_tl,
   skills .value_required:n = true,
   damage-vulnerabilities .tl_set:N         = \l__damage_vulnerabilities_tl,
@@ -328,7 +331,6 @@
 \cs_new_protected_nopar:Npn \__dnd_monster_details:
 {
     \begin {__dnd_monster_attributes}
-      \__dnd_if_monster_attribute:nn {\l__saving_throws_tl}          {\savesname}
       \__dnd_if_monster_attribute:nn {\l__skills_tl}                 {\skillsname}
       \__dnd_if_monster_attribute:nn {\l__damage_vulnerabilities_tl} {\dvulname}
       \__dnd_if_monster_attribute:nn {\l__damage_resistances_tl}     {\dresname}
@@ -352,7 +354,6 @@
 {
   \group_begin:
     \keys_set:nn { dnd / monster / details } {#1}
-    \DndMonsterLine{}
     \__dnd_monster_details:
     \DndMonsterLine{}
   \group_end:
@@ -376,56 +377,75 @@
       {#1}
   }
 
+% Helper: print only the modifier (e.g., +2, -1)
+\cs_new_protected_nopar:Npn \__dnd_ability_modifier_only:N #1
+  {
+    \int_set:Nn \l_tmpa_int { \fp_eval:n { floor ( ( #1 - 10 ) / 2 ) } }
+    \int_compare:nNnTF {\l_tmpa_int} < {0}
+      {--}
+      {+}
+    \int_abs:n \l_tmpa_int
+  }
+
 \keys_define:nn { dnd / monster / ability_scores }
   {
     str .tl_set:N         = \l__str_tl,
     str .initial:n        = 10,
     str .value_required:n = true,
     STR .meta:n = { str = #1 },
+    strsave .tl_set:N         = \l__strsave_tl,
+    strsave .initial:n        = ,
     dex .tl_set:N         = \l__dex_tl,
     dex .initial:n        = 10,
     dex .value_required:n = true,
     DEX .meta:n = { dex = #1 },
+    dexsave .tl_set:N         = \l__dexsave_tl,
+    dexsave .initial:n        = ,
     con .tl_set:N         = \l__con_tl,
     con .initial:n        = 10,
     con .value_required:n = true,
     CON .meta:n = { con = #1 },
+    consave .tl_set:N         = \l__consave_tl,
+    consave .initial:n        = ,
     int .tl_set:N         = \l__int_tl,
     int .initial:n        = 10,
     int .value_required:n = true,
     INT .meta:n = { int = #1 },
+    intsave .tl_set:N         = \l__intsave_tl,
+    intsave .initial:n        = ,
     wis .tl_set:N         = \l__wis_tl,
     wis .initial:n        = 10,
     wis .value_required:n = true,
     WIS .meta:n = { wis = #1 },
+    wissave .tl_set:N         = \l__wissave_tl,
+    wissave .initial:n        = ,
     cha .tl_set:N         = \l__cha_tl,
     cha .initial:n        = 10,
     cha .value_required:n = true,
     CHA .meta:n = { cha = #1 },
+    chasave .tl_set:N         = \l__chasave_tl,
+    chasave .initial:n        = ,
   }
 
 % Ability scores in a table
 \cs_new_protected_nopar:Npn \__dnd_monster_ability_scores:
   {
-    \color {titlered}
-    \par \vspace{1pt} \noindent
-    \begin{tabularx} {\linewidth} {YYYYYY}
-      \rule {0pt} {3.7mm} % adds space between hline and table
-      \textbf {\strstatname} &
-      \textbf {\dexstatname} &
-      \textbf {\constatname} &
-      \textbf {\intstatname} &
-      \textbf {\wisstatname} &
-      \textbf {\chastatname} \\
-      \exp_args:NV \__dnd_ability_score_modifier:N \l__str_tl &
-      \exp_args:NV \__dnd_ability_score_modifier:N \l__dex_tl &
-      \exp_args:NV \__dnd_ability_score_modifier:N \l__con_tl &
-      \exp_args:NV \__dnd_ability_score_modifier:N \l__int_tl &
-      \exp_args:NV \__dnd_ability_score_modifier:N \l__wis_tl &
-      \exp_args:NV \__dnd_ability_score_modifier:N \l__cha_tl
-    \end{tabularx}
-
-    \par \vspace{4pt}%
+    \setlength{\arraycolsep}{1pt}
+    \noindent
+    \begin{tabular}{@{}m{1.1em} m{0.6em} m{0.9em} m{0.9em} m{1.1em} m{0.6em} m{0.9em} m{0.9em} m{1.4em} m{0.6em} m{0.9em} m{0.9em}@{}}
+      % Header row: MOD and SAVE labels
+      & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} &
+      & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} &
+      & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} \\
+      % First row: STR, DEX, CON
+      \cellcolor{dndcelltop}\textbf{\strstatname} & \cellcolor{dndcelltop}\l__str_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__str_tl & \cellcolor{dndcelltopalt}\l__strsave_tl &
+      \cellcolor{dndcelltop}\textbf{\dexstatname} & \cellcolor{dndcelltop}\l__dex_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__dex_tl & \cellcolor{dndcelltopalt}\l__dexsave_tl &
+      \cellcolor{dndcelltop}\textbf{\constatname} & \cellcolor{dndcelltop}\l__con_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__con_tl & \cellcolor{dndcelltopalt}\l__consave_tl \\
+      % Second row: INT, WIS, CHA
+      \cellcolor{dndcellbot}\textbf{\intstatname} & \cellcolor{dndcellbot}\l__int_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__int_tl & \cellcolor{dndcellbotal}\l__intsave_tl &
+      \cellcolor{dndcellbot}\textbf{\wisstatname} & \cellcolor{dndcellbot}\l__wis_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__wis_tl & \cellcolor{dndcellbotal}\l__wissave_tl &
+      \cellcolor{dndcellbot}\textbf{\chastatname} & \cellcolor{dndcellbot}\l__cha_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__cha_tl & \cellcolor{dndcellbotal}\l__chasave_tl
+    \end{tabular}
   }
 
 \NewDocumentCommand {\DndMonsterAbilityScores} {o}

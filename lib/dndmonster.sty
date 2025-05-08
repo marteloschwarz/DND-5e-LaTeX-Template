@@ -56,6 +56,7 @@
     parbox      = false,
     boxsep      = 0pt,
     toptitle    = 3mm,
+    bottomtitle = 8pt,
     left        = 0pt,
     right       = 0pt,
     sharp~corners,
@@ -80,6 +81,7 @@
     parbox           = false,
     boxsep           = 2pt,
     toptitle         = 8pt,
+    bottomtitle      = 8pt,
     top              = 0pt,
     left             = 2pt,
     right            = 2pt,
@@ -114,19 +116,19 @@
 % Italicized text appearing immediately after monster's name
 \NewDocumentCommand {\DndMonsterType} {m}
   {
-    \begin {hangingpar}
+    \DndMonsterLine
+    \begin{hangingpar}
       \textit {#1}
-    \end {hangingpar}
+    \end{hangingpar}
   }
 
 % Fancy DnD 5e stat block rule
 \NewDocumentCommand {\DndMonsterLine} {}
   {
-    \par \vspace{-2pt} \noindent
-    \begin {tikzpicture}
-      \draw [ rulered, fill = rulered ] ( 0, 0 ) -- ( 0, 0.1 ) -- ( \linewidth, 0.05 );
-    \end {tikzpicture}
     \par
+    \vspace{-0.5em}
+    {\color{titlered}\rule{\linewidth}{1pt}}
+    \vspace{0.2em}
   }
 
 % A description variant used to list creature attributes.
@@ -178,7 +180,6 @@
   {
     \group_begin:
       \keys_set:nn { dnd / monster / basics } {#1}
-      \DndMonsterLine
       \__dnd_monster_basics:
       \DndMonsterLine
     \group_end:

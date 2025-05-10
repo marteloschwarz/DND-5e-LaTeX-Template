@@ -69,7 +69,7 @@
     left             = 2pt,
     right            = 2pt,
     bottom           = 7pt,
-    sharp~corners,
+    arc=4pt,
     oversize         = 0pt,
     colback          = statblockbg,
     colbacktitle     = statblockbg,
@@ -89,7 +89,7 @@
 % Italicized text appearing immediately after monster's name
 \NewDocumentCommand {\DndMonsterType} {m}
   {
-    \DndMonsterLine
+    \par\noindent
     \begin{hangingpar}
       \textit {#1}
     \end{hangingpar}

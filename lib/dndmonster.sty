@@ -53,29 +53,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Monster environments
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Stat block made to look like the Monster Manual NPC definitions
-\DeclareTColorBox {DndMonsterNoBg} { O{} m }
-  {
-    enhanced,
-    frame~hidden,
-    boxrule     = 0pt,
-    breakable,
-    parbox      = false,
-    boxsep      = 0pt,
-    toptitle    = 3mm,
-    bottomtitle = 8pt,
-    left        = 0pt,
-    right       = 0pt,
-    sharp~corners,
-    opacityback = 0,
-    colframe    = titlered,
-    fonttitle   = \DndFontStatBlockTitle,
-    fontupper   = \DndFontStatBlockBody,
-    fontlower   = \DndFontStatBlockBody,
-    title       = {#2},
-    coltitle    = titlered,
-    #1
-  }
 
 % Stat block made to look like stat blocks in the PHB.
 \DeclareTColorBox {DndMonsterBg} { O{} m }
@@ -110,9 +87,6 @@
   {
     \let\DndMonster\DndMonsterBg
     \let\endDndMonster\endDndMonsterBg
-  }{
-    \let\DndMonster\DndMonsterNoBg
-    \let\endDndMonster\endDndMonsterNoBg
   }
 
 % Italicized text appearing immediately after monster's name

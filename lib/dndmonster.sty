@@ -399,20 +399,21 @@
 \cs_new_protected_nopar:Npn \__dnd_monster_ability_scores:
   {
     \setlength{\arraycolsep}{0.2pt}
+    \setlength{\tabcolsep}{3pt} % default is 6pt
     \noindent
-    \begin{tabular}{m{3.1em} m{0.9em} m{0.9em} m{3.2em} m{0.9em} m{0.9em} m{3.3em} m{0.9em} m{0.9em}}
+    \begin{tabular}{m{2.2em} m{1.2em} m{0.9em} m{0.9em} m{2.2em} m{1.2em} m{0.9em} m{0.9em} m{2.2em} m{1.2em} m{0.9em} m{0.9em}}
       % Header row: MOD and SAVE labels
-      & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} &
-      & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} &
-      & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} \\
+      & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} &
+        & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} &
+        & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} \\
       % First row: STR, DEX, CON
-      \cellcolor{dndcelltop}\textbf{S\textsc{tr}}~\l__str_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__str_tl & \cellcolor{dndcelltopalt}\l__strsave_tl &
-      \cellcolor{dndcelltop}\textbf{D\textsc{ex}}~\l__dex_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__dex_tl & \cellcolor{dndcelltopalt}\l__dexsave_tl &
-      \cellcolor{dndcelltop}\textbf{C\textsc{on}}~\l__con_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__con_tl & \cellcolor{dndcelltopalt}\l__consave_tl \\
+      \cellcolor{dndcelltop}\textbf{S\textsc{tr}} & \cellcolor{dndcelltop}\l__str_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__str_tl & \cellcolor{dndcelltopalt}\l__strsave_tl &
+      \cellcolor{dndcelltop}\textbf{D\textsc{ex}} & \cellcolor{dndcelltop}\l__dex_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__dex_tl & \cellcolor{dndcelltopalt}\l__dexsave_tl &
+      \cellcolor{dndcelltop}\textbf{C\textsc{on}} & \cellcolor{dndcelltop}\l__con_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__con_tl & \cellcolor{dndcelltopalt}\l__consave_tl \\
       % Second row: INT, WIS, CHA
-      \cellcolor{dndcellbot}\textbf{I\textsc{nt}}~\l__int_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__int_tl & \cellcolor{dndcellbotal}\l__intsave_tl &
-      \cellcolor{dndcellbot}\textbf{W\textsc{is}}~\l__wis_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__wis_tl & \cellcolor{dndcellbotal}\l__wissave_tl &
-      \cellcolor{dndcellbot}\textbf{C\textsc{ha}}~\l__cha_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__cha_tl & \cellcolor{dndcellbotal}\l__chasave_tl
+      \cellcolor{dndcellbot}\textbf{I\textsc{nt}} & \cellcolor{dndcellbot}\l__int_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__int_tl & \cellcolor{dndcellbotal}\l__intsave_tl &
+      \cellcolor{dndcellbot}\textbf{W\textsc{is}} & \cellcolor{dndcellbot}\l__wis_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__wis_tl & \cellcolor{dndcellbotal}\l__wissave_tl &
+      \cellcolor{dndcellbot}\textbf{C\textsc{ha}} & \cellcolor{dndcellbot}\l__cha_tl & \cellcolor{dndcellbotal}\__dnd_ability_modifier_only:N \l__cha_tl & \cellcolor{dndcellbotal}\l__chasave_tl
     \end{tabular}
   }
 

@@ -160,62 +160,50 @@
   }
 
 %% Monster CR/XP helper
-% \l_tmpa_tl - CR
-% \l_tmpb_tl - XP
+% Refactored Monster CR/XP helper: returns only the XP value for a given CR
 \cs_new_protected_nopar:Npn \__dnd_cr_xp:N #1
   {
-    \tl_set:Nn \l_tmpa_tl {#1}
-    \str_case_e:nnTF {#1}
+    \str_case_e:nnF {#1}
       {
-        {0}   { \tl_set:Nn \l_tmpb_tl {0} }
-        {0/10}
-          {
-            \tl_set:Nn \l_tmpa_tl {0}
-            \tl_set:Nn \l_tmpb_tl {10}
-          }
-        {1/10}
-          {
-            \dnd@deprecate{ Challenge ~ 1/10 } {0.8} [ Use ~ challenge ~ 0/10 ~ instead. ]
-            \tl_set:Nn \l_tmpa_tl {0}
-            \tl_set:Nn \l_tmpb_tl {10}
-          }
-        {1/8} { \tl_set:Nn \l_tmpb_tl {25} }
-        {1/4} { \tl_set:Nn \l_tmpb_tl {50} }
-        {1/2} { \tl_set:Nn \l_tmpb_tl {100} }
-        {1}   { \tl_set:Nn \l_tmpb_tl {200} }
-        {2}   { \tl_set:Nn \l_tmpb_tl {450} }
-        {3}   { \tl_set:Nn \l_tmpb_tl {700} }
-        {4}   { \tl_set:Nn \l_tmpb_tl {1100} }
-        {5}   { \tl_set:Nn \l_tmpb_tl {1800} }
-        {6}   { \tl_set:Nn \l_tmpb_tl {2300} }
-        {7}   { \tl_set:Nn \l_tmpb_tl {2900} }
-        {8}   { \tl_set:Nn \l_tmpb_tl {3900} }
-        {9}   { \tl_set:Nn \l_tmpb_tl {5000} }
-        {10}  { \tl_set:Nn \l_tmpb_tl {5900} }
-        {11}  { \tl_set:Nn \l_tmpb_tl {7200} }
-        {12}  { \tl_set:Nn \l_tmpb_tl {8400} }
-        {13}  { \tl_set:Nn \l_tmpb_tl {10000} }
-        {14}  { \tl_set:Nn \l_tmpb_tl {11500} }
-        {15}  { \tl_set:Nn \l_tmpb_tl {13000} }
-        {16}  { \tl_set:Nn \l_tmpb_tl {15000} }
-        {17}  { \tl_set:Nn \l_tmpb_tl {18000} }
-        {18}  { \tl_set:Nn \l_tmpb_tl {20000} }
-        {19}  { \tl_set:Nn \l_tmpb_tl {22000} }
-        {20}  { \tl_set:Nn \l_tmpb_tl {25000} }
-        {21}  { \tl_set:Nn \l_tmpb_tl {33000} }
-        {22}  { \tl_set:Nn \l_tmpb_tl {41000} }
-        {23}  { \tl_set:Nn \l_tmpb_tl {50000} }
-        {24}  { \tl_set:Nn \l_tmpb_tl {62000} }
-        {25}  { \tl_set:Nn \l_tmpb_tl {75000} }
-        {26}  { \tl_set:Nn \l_tmpb_tl {90000} }
-        {27}  { \tl_set:Nn \l_tmpb_tl {105000} }
-        {28}  { \tl_set:Nn \l_tmpb_tl {120000} }
-        {29}  { \tl_set:Nn \l_tmpb_tl {135000} }
-        {30}  { \tl_set:Nn \l_tmpb_tl {155000} }
+        {0}   {0}
+        {0/10} {10}
+        {1/10} {10}
+        {1/8} {25}
+        {1/4} {50}
+        {1/2} {100}
+        {1}   {200}
+        {2}   {450}
+        {3}   {700}
+        {4}   {1100}
+        {5}   {1800}
+        {6}   {2300}
+        {7}   {2900}
+        {8}   {3900}
+        {9}   {5000}
+        {10}  {5900}
+        {11}  {7200}
+        {12}  {8400}
+        {13}  {10000}
+        {14}  {11500}
+        {15}  {13000}
+        {16}  {15000}
+        {17}  {18000}
+        {18}  {20000}
+        {19}  {22000}
+        {20}  {25000}
+        {21}  {33000}
+        {22}  {41000}
+        {23}  {50000}
+        {24}  {62000}
+        {25}  {75000}
+        {26}  {90000}
+        {27}  {105000}
+        {28}  {120000}
+        {29}  {135000}
+        {30}  {155000}
       }
-      { \l_tmpa_tl\ ( \numprint {\l_tmpb_tl} ~ \xpname ) }
-      { #1 }
-}
+      {#1}
+  }
 
 %% Monster CR/PB helper
 % \l_tmpa_tl - CR
@@ -309,15 +297,7 @@
       \__dnd_if_monster_attribute:nn {\l__gear_tl} {\gearname}
       \item [\sensesname]    \l__senses_tl
       \item [\languagesname] \l__languages_tl
-      \item [\challengename] \__dnd_cr_xp:N {\l__challenge_tl}
-      \tl_if_empty:NF {\l__proficiency_tl}
-        {
-          {\enit@svlabel{\enit@format{\pbonname}}}
-          \hskip \labelsep
-          \str_if_eq:VnTF \l__proficiency_tl *
-            {\__dnd_cr_pb:N {\l__challenge_tl}}
-            {\l__proficiency_tl}
-        }
+      \item [\challengename] \l__challenge_tl\ (\__dnd_cr_xp:N {\l__challenge_tl}~\xpname;~\pbonname\ \__dnd_cr_pb:N {\l__challenge_tl})
     \end {__dnd_monster_attributes}
 }
 

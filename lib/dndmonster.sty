@@ -258,12 +258,10 @@
   damage-resistances .tl_set:N         = \l__damage_resistances_tl,
   damage-resistances .value_required:n = true,
   damageresistances .meta:n = { damage-resistances = {#1} },
-  damage-immunities .tl_set:N         = \l__damage_immunities_tl,
-  damage-immunities .value_required:n = true,
-  damageimmunities .meta:n = { damage-immunities = {#1} },
-  condition-immunities .tl_set:N         = \l__condition_immunities_tl,
-  condition-immunities .value_required:n = true,
-  conditionimmunities .meta:n = { condition-immunities = {#1} },
+  immunities .tl_set:N         = \l__immunities_tl,
+  immunities .value_required:n = true,
+  skills .tl_set:N         = \l__skills_tl,
+  skills .value_required:n = true,
   senses .tl_set:N         = \l__senses_tl,
   senses .initial:n        = \defaultsensesname,
   senses .value_required:n = true,
@@ -287,8 +285,7 @@
       \__dnd_if_monster_attribute:nn {\l__skills_tl}                 {\skillsname}
       \__dnd_if_monster_attribute:nn {\l__damage_vulnerabilities_tl} {\dvulname}
       \__dnd_if_monster_attribute:nn {\l__damage_resistances_tl}     {\dresname}
-      \__dnd_if_monster_attribute:nn {\l__damage_immunities_tl}      {\dimmname}
-      \__dnd_if_monster_attribute:nn {\l__condition_immunities_tl}   {\cimmname}
+      \__dnd_if_monster_attribute:nn {\l__immunities_tl}             {\dimmname}
       \__dnd_if_monster_attribute:nn {\l__gear_tl} {\gearname}
       \item [\sensesname]    \l__senses_tl
       \item [\languagesname] \l__languages_tl
@@ -640,7 +637,4 @@
   {
     \item [ #1 . ] #2
   }
-
-% Add this near the top of the file, after other label definitions
-\providecommand{\gearname}{Gear}
 

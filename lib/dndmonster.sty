@@ -515,9 +515,6 @@
     range .tl_set:N         = \l__range_tl,
     range .initial:n        = 20/60,
     range .value_required:n = true,
-    targets .tl_set:N         = \l__targets_tl,
-    targets .initial:n        = \defaulttargetsname,
-    targets .value_required:n = true,
     dmg .tl_set:N         = \l__dmg_tl,
     dmg .value_required:n = true,
     dmg-type .tl_set:N         = \l__dmg_type_tl,
@@ -582,8 +579,7 @@
         {% Melee and Ranged is the default
           \textit{ \__dnd_caption:nn {\meleeorrangedattackname} {\l__dnd_attack_type_tl} : } ~ \__dnd_caption:nn {\tohitname} {\l__mod_tl}, ~ \__dnd_monster_reach:\ \orname\ \__dnd_monster_range:
         }
-      , ~ \l__targets_tl. ~
-      \textit { \hitname : } ~
+      , ~ \textit { \hitname : } ~
 
       \str_if_empty:NF {\l__dmg_tl} % Don't show any damage if `dmg' is not set.
         {

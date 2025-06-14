@@ -450,10 +450,10 @@
         \regex_match:NnTF \c__pos_int_regex {#1}
         {
           \str_if_in:NnTF {#2} {,}
-          { \__dnd_caption:nn {\numberperdayeachname} {#1} }
-          { \__dnd_caption:nn {\numberperdayname} {#1} }
+          { \textbf{\__dnd_caption:nn {\numberperdayeachname} {#1}} }
+          { \textbf{\__dnd_caption:nn {\numberperdayname} {#1}} }
         }
-        {#1}
+        { \textbf{#1} }
         :
       ]
       \DndEmphSpellString {#2}

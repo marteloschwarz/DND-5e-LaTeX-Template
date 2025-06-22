@@ -369,7 +369,20 @@
     chasave .initial:n        = ,
   }
 
-% Ability scores in a table
+% Pre-define the save abbreviation based on language
+\cs_new_protected:Npn \__dnd_set_save_abbr:
+  {
+    \@ifpackageloaded{babel}
+      {
+        \iflanguage{ngerman}
+          { \tl_set:Nn \l__dnd_save_abbr_tl {rw} }
+          { \tl_set:Nn \l__dnd_save_abbr_tl {save} }
+      }
+      { \tl_set:Nn \l__dnd_save_abbr_tl {save} }
+  }
+
+% Initialize the save abbreviation
+\tl_new:N \l__dnd_save_abbr_tl
 
 \cs_new_protected_nopar:Npn \__dnd_monster_ability_scores:
   {
@@ -378,9 +391,9 @@
     \noindent
     \begin{tabular}{m{2.2em} m{1.2em} m{0.9em} m{0.9em} m{0.1em} m{2.2em} m{1.2em} m{0.9em} m{0.9em} m{0.1em} m{2.2em} m{1.2em} m{0.9em} m{0.9em}}
       % Header row: MOD and SAVE labels
-      & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} & &
-        & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} & &
-        & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{save}} \\
+      & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{\@ifpackageloaded{babel}{\iflanguage{ngerman}{rw}{save}}{save}}} & &
+        & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{\@ifpackageloaded{babel}{\iflanguage{ngerman}{rw}{save}}{save}}} & &
+        & & {\scriptsize\textsc{mod}} & {\scriptsize\textsc{\@ifpackageloaded{babel}{\iflanguage{ngerman}{rw}{save}}{save}}} \\
       % First row: STR, DEX, CON
       \cellcolor{dndcelltop}\textbf{S\textsc{tr}} & \cellcolor{dndcelltop}\l__str_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__str_tl & \cellcolor{dndcelltopalt}\l__strsave_tl & &
       \cellcolor{dndcelltop}\textbf{D\textsc{ex}} & \cellcolor{dndcelltop}\l__dex_tl & \cellcolor{dndcelltopalt}\__dnd_ability_modifier_only:N \l__dex_tl & \cellcolor{dndcelltopalt}\l__dexsave_tl & &

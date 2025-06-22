@@ -289,7 +289,7 @@
       \__dnd_if_monster_attribute:nn {\l__gear_tl} {\gearname}
       \item [\sensesname]    \l__senses_tl
       \item [\languagesname] \l__languages_tl
-      \item [\challengename] \l__challenge_tl\ (\__dnd_cr_xp:N {\l__challenge_tl}~\xpname;~\pbonname\ \__dnd_cr_pb:N {\l__challenge_tl})
+      \item [\challengename] \l__challenge_tl\ (\@ifpackageloaded{babel}{\iflanguage{ngerman}{\xpname\ ~\__dnd_cr_xp:N {\l__challenge_tl}}{\__dnd_cr_xp:N {\l__challenge_tl}~\xpname}}{\__dnd_cr_xp:N {\l__challenge_tl}~\xpname};~\pbonname\ \__dnd_cr_pb:N {\l__challenge_tl})
     \end {__dnd_monster_attributes}
 }
 
